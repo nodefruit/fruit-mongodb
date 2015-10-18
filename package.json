@@ -2,7 +2,7 @@
   "name": "fruit-mongodb",
   "version": "0.0.0",
   "description": "MongoDB Fruit ORM adapter",
-  "main": "mongodb.js",
+  "main": "fruit-mongodb.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/fruit-orm/fruit-mongodb/issues"
   },
-  "homepage": "https://github.com/fruit-orm/fruit-mongodb#readme"
+  "homepage": "https://github.com/fruit-orm/fruit-mongodb#readme",
+  "dependencies": {
+    "mongodb": "^2.0.46"
+  }
 }
