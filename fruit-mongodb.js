@@ -40,6 +40,22 @@ module.exports = (function () {
       return this;
     }
     
+    this.findAll = function (collectionName, callBack) {
+      this.find(collectionName, {}, callBack);
+    }
+    
+    this.find = function (collectionName, condition, callBack) {
+      exec(function (err, db) {
+        if(err) return callBack(err);
+        db.collection(collectionName)
+          .find(condition)
+          .toArray(function(err, result) {
+            callBack(err, result);
+            db.close();
+        });
+      })
+    }
+    
   }
   
   return new dataManager;
