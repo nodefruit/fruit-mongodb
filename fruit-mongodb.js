@@ -63,7 +63,7 @@ module.exports = (function () {
           db.close();
           callBack(ex);
         }
-      })
+      });
     }
     
     this.update = function (collectionName, data, condition, callBack) {
@@ -79,16 +79,15 @@ module.exports = (function () {
           db.close();
           callBack(ex);
         }
-      })
+      });
     }
-    
     
     this.updateAll = function (collectionName, data, condition, callBack) {
       exec(function (err, db) {
         if(err) return callBack(err);
         try {
           db.collection(collectionName)
-            .update(condition, { $set : data }, {w:1, multi: true}, function (err, result) {
+            .update(condition, { $set : data }, { w:1, multi: true }, function (err, result) {
               db.close();
               callBack(err, result.result);
           });
@@ -96,9 +95,40 @@ module.exports = (function () {
           db.close();
           callBack(ex);
         }
-      })
+      });
+    }
+ 
+    this.delete = function (collectionName, condition, callBack) {
+      exec(function (err, db) {
+        if(err) return callBack(err);
+        try {
+          db.collection(collectionName)
+            .deleteOne(condition, function (err, result) {
+              db.close();
+              callBack(err, result.result);
+          })
+        } catch (ex) {
+          db.close();
+          callBack(ex);
+        }
+      });
     }
     
+    this.deleteAll = function (collectionName, condition, callBack) {
+      exec(function (err, db) {
+        if(err) return callBack(err);
+        try {
+          db.collection(collectionName)
+            .deleteMany(condition, function (err, result) {
+              db.close();
+              callBack(err, result.result);
+          });
+        } catch (ex) {
+          db.close();
+          callBack(ex);
+        }
+      });
+    }
   }
   
   return new dataManager;
