@@ -17,8 +17,8 @@ module.exports = (function () {
     this.connect = function (conf, callBack) {
       config = conf;
       MongoClient.connect(conf.url, function(err, db) {
-        callBack(err);
         db.close();
+        callBack(err);
       });
       return this;
     }
@@ -31,11 +31,16 @@ module.exports = (function () {
     this.insert = function (collectionName, data, callBack) {
       exec(function (err, db) {
         if(err) return callBack(err);
-        db.collection(collectionName)
-          .insert(data, function (err, result) {
-            callBack(err, result);
-            db.close();
-        });
+        try {
+          db.collection(collectionName)
+            .insert(data, function (err, result) {
+              db.close();
+              callBack(err, result);
+          });
+        } catch(ex) {
+          db.close();
+          callBack(ex);
+        }
       });
       return this;
     }
@@ -47,12 +52,17 @@ module.exports = (function () {
     this.find = function (collectionName, condition, callBack) {
       exec(function (err, db) {
         if(err) return callBack(err);
-        db.collection(collectionName)
-          .find(condition)
-          .toArray(function(err, result) {
-            callBack(err, result);
-            db.close();
-        });
+        try {
+          db.collection(collectionName)
+            .find(condition)
+            .toArray(function(err, result) {
+              db.close();
+              callBack(err, result);
+          });
+        } catch (ex) {
+          db.close();
+          callBack(ex);
+        }
       })
     }
     
