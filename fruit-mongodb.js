@@ -64,6 +64,22 @@ module.exports = (function () {
           callBack(ex);
         }
       });
+    }    
+    
+    this.findOne = function (collectionName, condition, callBack) {
+      exec(function (err, db) {
+        if(err) return callBack(err);
+        try {
+          db.collection(collectionName)
+            .findOne(condition, function(err, result) {
+              db.close();
+              callBack(err, result);
+          });
+        } catch (ex) {
+          db.close();
+          callBack(ex);
+        }
+      });
     }
     
     this.update = function (collectionName, data, condition, callBack) {
