@@ -12,6 +12,18 @@ module.exports = (function () {
     });
   }
   
+  function formatResult (rst, affectedKey, data) {
+    var results = {
+      result : {
+          success       : !!rst.ok
+        , count         : rst.n
+        , affectedCount : rst[affectedKey] || rst.n
+      }
+    }
+    data && (results.data = data);
+    return results;
+  }
+  
   function dataManager () {
     
     this.type = 'mongodb';
@@ -37,7 +49,7 @@ module.exports = (function () {
           db.collection(collectionName)
             .insert(data, function (err, result) {
               db.close();
-              callBack(err, result);
+              callBack(err, err ? null : formatResult(result.result, null, result.ops));
           });
         } catch(ex) {
           db.close();
@@ -91,7 +103,7 @@ module.exports = (function () {
           db.collection(collectionName)
             .updateOne(condition, { $set : data }, function (err, result) {
               db.close();
-              callBack(err, result.result);
+              callBack(err, err ? null : formatResult(result.result, 'nModified'));
           });
         } catch (ex) {
           db.close();
@@ -107,7 +119,7 @@ module.exports = (function () {
           db.collection(collectionName)
             .update(condition, { $set : data }, { w:1, multi: true }, function (err, result) {
               db.close();
-              callBack(err, result.result);
+              callBack(err, err ? null : formatResult(result.result, 'nModified'));
           });
         } catch (ex) {
           db.close();
@@ -123,7 +135,7 @@ module.exports = (function () {
           db.collection(collectionName)
             .deleteOne(condition, function (err, result) {
               db.close();
-              callBack(err, result.result);
+              callBack(err, err ? null : formatResult(result.result));
           })
         } catch (ex) {
           db.close();
@@ -139,7 +151,7 @@ module.exports = (function () {
           db.collection(collectionName)
             .deleteMany(condition, function (err, result) {
               db.close();
-              callBack(err, result.result);
+              callBack(err, err ? null : formatResult(result.result));
           });
         } catch (ex) {
           db.close();
