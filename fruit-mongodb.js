@@ -14,6 +14,8 @@ module.exports = (function () {
   
   function dataManager () {
     
+    this.type = 'mongodb';
+    
     this.connect = function (conf, callBack) {
       config = conf;
       MongoClient.connect(conf.url, function(err, db) {
