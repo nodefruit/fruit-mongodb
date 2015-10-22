@@ -100,6 +100,7 @@ module.exports = (function () {
       exec(function (err, db) {
         if(err) return callBack(err);
         try {
+          delete data._id;
           db.collection(collectionName)
             .updateOne(condition, { $set : data }, function (err, result) {
               db.close();
@@ -116,6 +117,7 @@ module.exports = (function () {
       exec(function (err, db) {
         if(err) return callBack(err);
         try {
+          delete data._id;
           db.collection(collectionName)
             .update(condition, { $set : data }, { w:1, multi: true }, function (err, result) {
               db.close();
