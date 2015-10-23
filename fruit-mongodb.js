@@ -3,6 +3,7 @@
 module.exports = (function () {
   
   var MongoClient = require('mongodb').MongoClient
+    , extend      = require('extend')
     , config      = {};
   
   function exec (callBack) {
@@ -20,8 +21,7 @@ module.exports = (function () {
         , affectedCount : rst[affectedKey] || rst.n
       }
     }
-    data && (results.data = data);
-    return results;
+    return data ? extend(results, data) : results;
   }
   
   function dataManager () {
@@ -49,7 +49,9 @@ module.exports = (function () {
           db.collection(collectionName)
             .insert(data, function (err, result) {
               db.close();
-              callBack(err, err ? null : formatResult(result.result, null, result.ops));
+              callBack(err, err ? null : formatResult(result.result, null, { 
+                insertedIds : result.ops.map(function (item) { return item._id; })
+              }));
           });
         } catch(ex) {
           db.close();
