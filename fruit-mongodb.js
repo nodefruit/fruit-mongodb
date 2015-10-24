@@ -132,28 +132,12 @@ module.exports = (function () {
       });
     }
  
-    this.delete = function (collectionName, condition, callBack) {
+    function del (one, collectionName, condition, callBack) {
       exec(function (err, db) {
         if(err) return callBack(err);
         try {
           db.collection(collectionName)
-            .deleteOne(condition, function (err, result) {
-              db.close();
-              callBack(err, err ? null : formatResult(result.result));
-          })
-        } catch (ex) {
-          db.close();
-          callBack(ex);
-        }
-      });
-    }
-    
-    this.deleteAll = function (collectionName, condition, callBack) {
-      exec(function (err, db) {
-        if(err) return callBack(err);
-        try {
-          db.collection(collectionName)
-            .deleteMany(condition, function (err, result) {
+            [one ? 'deleteOne' : 'deleteMany'](condition, function (err, result) {
               db.close();
               callBack(err, err ? null : formatResult(result.result));
           });
@@ -162,6 +146,14 @@ module.exports = (function () {
           callBack(ex);
         }
       });
+    }
+    
+    this.delete = function (collectionName, condition, callBack) {
+      del(true, collectionName, condition, callBack);
+    }
+    
+    this.deleteAll = function (collectionName, condition, callBack) {
+      del(false, collectionName, condition, callBack);
     }
   }
   
