@@ -155,6 +155,21 @@ module.exports = (function () {
     this.deleteAll = function (collectionName, condition, callBack) {
       del(false, collectionName, condition, callBack);
     }
+    
+    this.count = function (collectionName, condition, callBack) {
+      exec(function (err, db) {
+        if(err) return callBack(err);
+        try {
+          db.collection(collectionName).count(condition, function (err, result) {
+            db.close();
+            callBack(err, result);
+          });
+        } catch (ex) {
+          db.close();
+          callBack(ex);
+        }
+      })
+    }
   }
   
   return new dataManager;
