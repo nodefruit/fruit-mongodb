@@ -72,13 +72,16 @@ module.exports = (function () {
       this.find(collectionName, {}, callBack);
     }
     
-    this.find = function (collectionName, condition, callBack) {
+    this.find = function (collectionName, condition, callBack, limit, offset) {
       exec(function (err, db) {
         if(err) return callBack(err);
         try {
-          db.collection(collectionName)
-            .find(condition)
-            .toArray(function(err, result) {
+          var collection = db.collection(collectionName);
+              collection = collection.find(condition);
+              collection = (limit ? collection.limit(limit) : collection );
+              collection = (offset ? collection.skip(offset) : collection );
+          
+          collection.toArray(function(err, result) {
               db.close();
               callBack(err, result);
           });
