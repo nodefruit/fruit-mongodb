@@ -4,13 +4,20 @@ module.exports = (function () {
   
   var MongoClient = require('mongodb').MongoClient
     , extend      = require('extend')
-    , config      = {};
+    , confString  = '';
   
   function exec (callBack) {
-    MongoClient.connect(config.url, function(err, db) {
+    MongoClient.connect(confString, function(err, db) {
       if(err) return callBack(err);
       callBack(null, db);
     });
+  }
+  
+  function confStringify (config) {
+    return 'mongodb://' 
+      + config.host + ':'
+      + config.port + '/'
+      + config.database;
   }
   
   function formatResult (rst, affectedKey, data) {
@@ -28,17 +35,17 @@ module.exports = (function () {
     
     this.type = 'mongodb';
     
-    this.connect = function (conf, callBack) {
-      config = conf;
-      MongoClient.connect(conf.url, function(err, db) {
-        db.close();
+    this.connect = function (config, callBack) {
+      confString = confStringify(config);
+      MongoClient.connect(confString, function(err, db) {
+        db && db.close();
         callBack(err);
       });
       return this;
     }
     
-    this.config = function (conf) {
-      config = conf;
+    this.config = function (config) {
+      confString = confStringify(config);
       return this;
     }
     
