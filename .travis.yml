@@ -1,0 +1,14 @@
+sudo: false
+language: node_js
+node_js:
+  - '0.10'
+  - '0.12'
+  - '4'
+services:
+  - mongodb
+env:
+- HOST=127.0.0.1
+- PORT=27017
+- DB=test
+before_script: npm install -g mocha
+script: npm test
