@@ -57,7 +57,7 @@ module.exports = (function () {
             .insert(data, function (err, result) {
               db.close();
               callBack(err, err ? null : formatResult(result.result, null, { 
-                insertedIds : result.ops.map(function (item) { return item._id; })
+                insertedId : result.ops.map(function (item) { return item._id; })
               }));
           });
         } catch(ex) {
