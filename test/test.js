@@ -17,3 +17,21 @@ describe('Connexion to the database', function () {
     assert.equal(success, true);
   });
 });
+
+describe('Successfully drop the test collection', function () {
+  var success       = false
+    , mongoClient   = require('mongodb').MongoClient
+    , confString  = 'mongodb://' + config.host + ':' + config.port + '/' + config.database;
+  
+  beforeEach(function (done) {
+    mongoClient.connect(confString, function(err, db) {
+      db.collection(collectionName).drop();
+      success = success || !err;
+      done();
+    });
+  });
+  
+  it('should drop the collection', function () {
+    assert.equal(success, true);
+  });
+});
