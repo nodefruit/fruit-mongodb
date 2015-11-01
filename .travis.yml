@@ -7,4 +7,4 @@ node_js:
 services:
   - mongodb
 before_script: npm install -g mocha
-script: npm test
+script: HOST="localhost" DB="test" PORT="27017" npm test
