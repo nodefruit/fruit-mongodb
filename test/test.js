@@ -212,6 +212,50 @@ describe('successful count query', function () {
   });
 });
 
+describe('successful update query', function () {
+  var error     = false
+    , result    = null
+    , data      = { name : 'KHALID' }
+    , condition = { name : 'khalid' }
+
+  beforeEach(function (done) {
+    adapter.update(collectionName, data, condition, function (err, rst) {
+      result  = rst;
+      error   = !!err;
+      done();
+    });
+  });
+
+  it('should update first user with name khalid', function () {
+    assert.equal(error, false);
+    assert.equal(result.result.success, true);
+    assert.equal(result.result.count, 1);
+    assert.equal(result.result.affectedCount, 1);
+  });
+});
+
+describe('successful updateAll query', function () {
+  var error     = false
+    , result    = null
+    , data      = { age : 50 }
+    , condition = { age : 30 }
+
+  beforeEach(function (done) {
+    adapter.updateAll(collectionName, data, condition, function (err, rst) {
+      result  = rst;
+      error   = !!err;
+      done();
+    });
+  });
+
+  it('should update all users with age 30', function () {
+    assert.equal(error, false);
+    assert.equal(result.result.success, true);
+    assert.equal(result.result.count, 3);
+    assert.equal(result.result.affectedCount, 3);
+  });
+});
+
 describe('Successfully drop the test collection', function () {
   var success       = false
     , mongoClient   = require('mongodb').MongoClient
