@@ -193,6 +193,25 @@ describe('Successfully selecting all data', function () {
   });
 });
 
+describe('successful count query', function () {
+  var error     = false
+    , result    = null
+    , condition = { name : 'khalid' }
+
+  beforeEach(function (done) {
+    adapter.count(collectionName, condition, function (err, rst) {
+      result  = rst;
+      error   = !!err;
+      done();
+    });
+  });
+
+  it('should count users with name khalid', function () {
+    assert.equal(error, false);
+    assert.equal(result, 1);
+  });
+});
+
 describe('Successfully drop the test collection', function () {
   var success       = false
     , mongoClient   = require('mongodb').MongoClient
