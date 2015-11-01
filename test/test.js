@@ -256,6 +256,48 @@ describe('successful updateAll query', function () {
   });
 });
 
+describe('successful delete query', function () {
+  var result    = null
+    , error     = null
+    , condition = { name : 'KHALID' }
+
+  beforeEach(function (done) {
+    adapter.delete(collectionName, condition, function (err, rst) {
+      result  = rst;
+      error   = !!err;
+      done();
+    });
+  });
+
+  it('should delete one user successfully', function () {
+    assert.equal(error, false);
+    assert.equal(result.result.success, true);
+    assert.equal(result.result.count, 1);
+    assert.equal(result.result.affectedCount, 1);
+  });
+});
+
+describe('successful deleteAll query', function () {
+  var result    = null
+    , error     = null
+    , condition = {}
+
+  beforeEach(function (done) {
+    adapter.deleteAll(collectionName, condition, function (err, rst) {
+      result  = rst;
+      error   = !!err;
+      done();
+    });
+  });
+
+  it('should delete all the users successfully', function () {
+    assert.equal(error, false);
+    assert.equal(result.result.success, true);
+    assert.equal(result.result.count, 4);
+    assert.equal(result.result.affectedCount, 4);
+  });
+});
+
 describe('Successfully drop the test collection', function () {
   var success       = false
     , mongoClient   = require('mongodb').MongoClient
