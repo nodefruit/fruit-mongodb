@@ -11,7 +11,7 @@ if(process.env.HOST && process.env.DB && process.env.PORT) {
   console.log(' Make sure to specify a new and empty database for test            ');
   console.log(' example :                                                         ');
   console.log(' HOST="localhost" DB="test" PORT="27017" npm test                  ');
-  process.exit();
+  throw new TypeError('');
 }
 
 module.exports = config;
