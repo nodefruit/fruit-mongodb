@@ -40,7 +40,7 @@ If you'd like to chat and discuss this project, you can find us here:
 - Mailing list: https://groups.google.com/forum/#!forum/nodefruit
 - [![Join the chat at https://gitter.im/nodefruit/fruit](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/nodefruit/fruit?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[logo]: https://github.com/nodefruit/fruit-mongodb/raw/master/pres/logo.png
+[logo]: https://github.com/nodefruit/fruit-mongodb/raw/master/pres/fruit-and-mongo-logo.png
 [repo-link]: https://github.com/nodefruit/fruit-mongodb
 [build-image]: https://api.travis-ci.org/nodefruit/fruit-mongodb.svg
 [build-url]: https://github.com/nodefruit/fruit-mongodb
