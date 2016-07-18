@@ -2,7 +2,6 @@
 
 [![CI Buimd][build-image]][build-url]
 [![Dependencied][dependencies-image]][dependencies-url]
-[![experimental][stability-image]][stability-url]
 [![MIT license][license-img]][license-url]
 [![Gitter][gitter-img]][gitter-url]
 
@@ -45,7 +44,6 @@ If you'd like to chat and discuss this project, you can find us here:
 [build-image]: https://api.travis-ci.org/nodefruit/fruit-mongodb.svg
 [build-url]: https://github.com/nodefruit/fruit-mongodb
 [stability-image]: https://img.shields.io/badge/stability-experimental-orange.svg
-[stability-url]: https://github.com/nodefruit/fruit-mysql
 [license-img]: https://img.shields.io/badge/license-MIT-green.svg
 [license-url]: https://github.com/nodefruit/fruit-mongodb/blob/master/LICENSE
 [dependencies-image]:https://david-dm.org/nodefruit/fruit-mongodb.svg
